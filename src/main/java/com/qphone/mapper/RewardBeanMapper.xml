@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qphone.dao.RewardBeanMapper">
+  <resultMap id="BaseResultMap" type="com.qphone.pojo.RewardBean">
+    <id column="RID" jdbcType="DECIMAL" property="rid" />
+    <result column="PID" jdbcType="DECIMAL" property="pid" />
+    <result column="RTYPE" jdbcType="VARCHAR" property="rtype" />
+    <result column="RMONEY" jdbcType="VARCHAR" property="rmoney" />
+    <result column="RJIESHAO" jdbcType="VARCHAR" property="rjieshao" />
+    <result column="RPHOTO" jdbcType="VARCHAR" property="rphoto" />
+    <result column="RNUMBER" jdbcType="VARCHAR" property="rnumber" />
+    <result column="RXIANGOU" jdbcType="VARCHAR" property="rxiangou" />
+    <result column="RYUNFEI" jdbcType="VARCHAR" property="ryunfei" />
+    <result column="RFAPIAO" jdbcType="VARCHAR" property="rfapiao" />
+    <result column="RDAY" jdbcType="VARCHAR" property="rday" />
+  </resultMap>
+
+
+  <insert id="insertone" parameterType="com.qphone.pojo.RewardBean">
+    insert into REWARD ( PID, RTYPE,
+    RMONEY, RJIESHAO, RPHOTO,
+    RNUMBER, RXIANGOU, RYUNFEI,
+    RFAPIAO, RDAY)
+    values ( #{pid,jdbcType=DECIMAL}, #{rtype,jdbcType=VARCHAR},
+    #{rmoney,jdbcType=VARCHAR}, #{rjieshao,jdbcType=VARCHAR}, #{rphoto,jdbcType=VARCHAR},
+    #{rnumber,jdbcType=VARCHAR}, #{rxiangou,jdbcType=VARCHAR}, #{ryunfei,jdbcType=VARCHAR},
+    #{rfapiao,jdbcType=VARCHAR}, #{rday,jdbcType=VARCHAR})
+  </insert>
+
+
+
+
+
+
+
+
+
+
+
+
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    RID, PID, RTYPE, RMONEY, RJIESHAO, RPHOTO, RNUMBER, RXIANGOU, RYUNFEI, RFAPIAO, RDAY
+  </sql>
+  <select id="selectByExample" parameterType="com.qphone.pojo.RewardBeanExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from REWARD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from REWARD
+    where RID = #{rid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from REWARD
+    where RID = #{rid,jdbcType=DECIMAL}
+  </delete>
+
+  <insert id="insertSelective" parameterType="com.qphone.pojo.RewardBean">
+    insert into REWARD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        RID,
+      </if>
+      <if test="pid != null">
+        PID,
+      </if>
+      <if test="rtype != null">
+        RTYPE,
+      </if>
+      <if test="rmoney != null">
+        RMONEY,
+      </if>
+      <if test="rjieshao != null">
+        RJIESHAO,
+      </if>
+      <if test="rphoto != null">
+        RPHOTO,
+      </if>
+      <if test="rnumber != null">
+        RNUMBER,
+      </if>
+      <if test="rxiangou != null">
+        RXIANGOU,
+      </if>
+      <if test="ryunfei != null">
+        RYUNFEI,
+      </if>
+      <if test="rfapiao != null">
+        RFAPIAO,
+      </if>
+      <if test="rday != null">
+        RDAY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        #{rid,jdbcType=DECIMAL},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=DECIMAL},
+      </if>
+      <if test="rtype != null">
+        #{rtype,jdbcType=VARCHAR},
+      </if>
+      <if test="rmoney != null">
+        #{rmoney,jdbcType=VARCHAR},
+      </if>
+      <if test="rjieshao != null">
+        #{rjieshao,jdbcType=VARCHAR},
+      </if>
+      <if test="rphoto != null">
+        #{rphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="rnumber != null">
+        #{rnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="rxiangou != null">
+        #{rxiangou,jdbcType=VARCHAR},
+      </if>
+      <if test="ryunfei != null">
+        #{ryunfei,jdbcType=VARCHAR},
+      </if>
+      <if test="rfapiao != null">
+        #{rfapiao,jdbcType=VARCHAR},
+      </if>
+      <if test="rday != null">
+        #{rday,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qphone.pojo.RewardBeanExample" resultType="java.lang.Long">
+    select count(*) from REWARD
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update REWARD
+    <set>
+      <if test="record.rid != null">
+        RID = #{record.rid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pid != null">
+        PID = #{record.pid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rtype != null">
+        RTYPE = #{record.rtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rmoney != null">
+        RMONEY = #{record.rmoney,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rjieshao != null">
+        RJIESHAO = #{record.rjieshao,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rphoto != null">
+        RPHOTO = #{record.rphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rnumber != null">
+        RNUMBER = #{record.rnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rxiangou != null">
+        RXIANGOU = #{record.rxiangou,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ryunfei != null">
+        RYUNFEI = #{record.ryunfei,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rfapiao != null">
+        RFAPIAO = #{record.rfapiao,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rday != null">
+        RDAY = #{record.rday,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update REWARD
+    set RID = #{record.rid,jdbcType=DECIMAL},
+      PID = #{record.pid,jdbcType=DECIMAL},
+      RTYPE = #{record.rtype,jdbcType=VARCHAR},
+      RMONEY = #{record.rmoney,jdbcType=VARCHAR},
+      RJIESHAO = #{record.rjieshao,jdbcType=VARCHAR},
+      RPHOTO = #{record.rphoto,jdbcType=VARCHAR},
+      RNUMBER = #{record.rnumber,jdbcType=VARCHAR},
+      RXIANGOU = #{record.rxiangou,jdbcType=VARCHAR},
+      RYUNFEI = #{record.ryunfei,jdbcType=VARCHAR},
+      RFAPIAO = #{record.rfapiao,jdbcType=VARCHAR},
+      RDAY = #{record.rday,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qphone.pojo.RewardBean">
+    update REWARD
+    <set>
+      <if test="pid != null">
+        PID = #{pid,jdbcType=DECIMAL},
+      </if>
+      <if test="rtype != null">
+        RTYPE = #{rtype,jdbcType=VARCHAR},
+      </if>
+      <if test="rmoney != null">
+        RMONEY = #{rmoney,jdbcType=VARCHAR},
+      </if>
+      <if test="rjieshao != null">
+        RJIESHAO = #{rjieshao,jdbcType=VARCHAR},
+      </if>
+      <if test="rphoto != null">
+        RPHOTO = #{rphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="rnumber != null">
+        RNUMBER = #{rnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="rxiangou != null">
+        RXIANGOU = #{rxiangou,jdbcType=VARCHAR},
+      </if>
+      <if test="ryunfei != null">
+        RYUNFEI = #{ryunfei,jdbcType=VARCHAR},
+      </if>
+      <if test="rfapiao != null">
+        RFAPIAO = #{rfapiao,jdbcType=VARCHAR},
+      </if>
+      <if test="rday != null">
+        RDAY = #{rday,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where RID = #{rid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qphone.pojo.RewardBean">
+    update REWARD
+    set PID = #{pid,jdbcType=DECIMAL},
+      RTYPE = #{rtype,jdbcType=VARCHAR},
+      RMONEY = #{rmoney,jdbcType=VARCHAR},
+      RJIESHAO = #{rjieshao,jdbcType=VARCHAR},
+      RPHOTO = #{rphoto,jdbcType=VARCHAR},
+      RNUMBER = #{rnumber,jdbcType=VARCHAR},
+      RXIANGOU = #{rxiangou,jdbcType=VARCHAR},
+      RYUNFEI = #{ryunfei,jdbcType=VARCHAR},
+      RFAPIAO = #{rfapiao,jdbcType=VARCHAR},
+      RDAY = #{rday,jdbcType=VARCHAR}
+    where RID = #{rid,jdbcType=DECIMAL}
+  </update>
+</mapper>

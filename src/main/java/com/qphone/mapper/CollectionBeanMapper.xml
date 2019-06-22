@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qphone.dao.CollectionBeanMapper">
+    <resultMap id="BaseResultMap" type="com.qphone.pojo.CollectionBean">
+        <id column="PID" jdbcType="DECIMAL" property="pid"/>
+        <result column="PNAME" jdbcType="VARCHAR" property="pname"/>
+
+        <result column="PMONEY" jdbcType="INTEGER" property="pmoney"/>
+
+        <result column="PDAY" jdbcType="VARCHAR" property="pday"/>
+        <result column="PCREATETIME" jdbcType="DATE" property="pcreatetime"/>
+        <result column="PDACHENGLV" jdbcType="VARCHAR" property="pdachenglv"/>
+        <result column="PMIAOSHU" jdbcType="VARCHAR" property="pmiaoshu"/>
+        <result column="PTOUTU" jdbcType="VARCHAR" property="ptoutu"/>
+        <result column="PXIANGTU" jdbcType="VARCHAR" property="pxiangtu"/>
+        <result column="PJIESHAO" jdbcType="VARCHAR" property="pjieshao"/>
+        <result column="PXIANGXIJIESHAO" jdbcType="VARCHAR" property="pxiangxijieshao"/>
+        <result column="PPHONE" jdbcType="VARCHAR" property="pphone"/>
+        <result column="PDIANHUA" jdbcType="VARCHAR" property="pdianhua"/>
+        <result column="PZHANGHAO" jdbcType="VARCHAR" property="pzhanghao"/>
+        <result column="PSHENFENZHENG" jdbcType="VARCHAR" property="pshenfenzheng"/>
+        <result column="PHONE1" jdbcType="VARCHAR" property="phone1"/>
+        <result column="PHONE2" jdbcType="VARCHAR" property="phone2"/>
+        <result column="PHONE3" jdbcType="VARCHAR" property="phone3"/>
+        <result column="PFENLEI" jdbcType="VARCHAR" property="pfenlei"/>
+        <result column="UUID" jdbcType="DECIMAL" property="uuid"/>
+        <result column="PCHOU" jdbcType="INTEGER" property="pchou"/>
+        <result column="UREALNAME" jdbcType="VARCHAR" property="urealname"/>
+        <result column="RDAY" jdbcType="INTEGER" property="rday"/>
+        <result column="RJIESHAO" jdbcType="INTEGER" property="rjieshao"/>
+        <result column="PSHENGYU" jdbcType="INTEGER" property="pshengyu"/>
+    </resultMap>
+
+
+    <select id="selectbyfenlei" resultMap="BaseResultMap" parameterType="String">
+    select * from collectionproject where pfenlei=#{name}
+  </select>
+    <select id="selectall" resultMap="BaseResultMap">
+    select * from collectionproject
+  </select>
+    <select id="selectcount" resultType="Integer">
+    select count(*) FROM collectionproject
+  </select>
+    <select id="selectid" resultMap="BaseResultMap" parameterType="java.math.BigDecimal">
+    select  c.*,u.urealname,r.rjieshao,r.rday  from collectionproject c,reward r,usertable u
+    where u.uuid=c.uuid and c.pid=r.pid and c.pid=#{id,jdbcType=DECIMAL}
+  </select>
+
+    <select id="selectbyname" parameterType="String" resultMap="BaseResultMap">
+    select * from collectionproject where pname=#{name}
+  </select>
+
+    <update id="updateone" parameterType="com.qphone.pojo.CollectionBean">
+
+    update collectionproject set pchou=pchou+#{pchou} where pname=#{pname}
+  </update>
+
+
+    <insert id="insertone" parameterType="com.qphone.pojo.CollectionBean">
+    insert into COLLECTIONPROJECT ( PNAME, PMONEY,
+    PDAY, PCREATETIME, PDACHENGLV,
+    PMIAOSHU, PTOUTU, PXIANGTU,
+    PJIESHAO, PXIANGXIJIESHAO, PPHONE,
+    PDIANHUA, PZHANGHAO, PSHENFENZHENG,
+    PHONE1, PHONE2, PHONE3,
+    PFENLEI, UUID, PCHOU,PSHENGYU
+    )
+    values ( #{pname,jdbcType=VARCHAR}, #{pmoney,jdbcType=INTEGER},
+    #{pday,jdbcType=VARCHAR}, #{pcreatetime,jdbcType=DATE}, #{pdachenglv,jdbcType=VARCHAR},
+    #{pmiaoshu,jdbcType=VARCHAR}, #{ptoutu,jdbcType=VARCHAR}, #{pxiangtu,jdbcType=VARCHAR},
+    #{pjieshao,jdbcType=VARCHAR}, #{pxiangxijieshao,jdbcType=VARCHAR}, #{pphone,jdbcType=VARCHAR},
+    #{pdianhua,jdbcType=VARCHAR}, #{pzhanghao,jdbcType=VARCHAR}, #{pshenfenzheng,jdbcType=VARCHAR},
+    #{phone1,jdbcType=VARCHAR}, #{phone2,jdbcType=VARCHAR}, #{phone3,jdbcType=VARCHAR},
+    #{pfenlei,jdbcType=VARCHAR}, #{uuid,jdbcType=DECIMAL}, #{pchou,jdbcType=INTEGER},
+    #{pshengyu,jdbcType=INTEGER}
+    )
+  </insert>
+
+    <select id="selectidbyname" parameterType="String" resultType="java.math.BigDecimal">
+  select pid from collectionproject where pname=#{name}
+</select>
+
+    <select id="selectbyuuid" resultType="String" parameterType="java.math.BigDecimal">
+    select pname from collectionproject where UUID=#{uuid}
+</select>
+
+
+    <select id="selectbyuuidname" resultMap="BaseResultMap" parameterType="java.math.BigDecimal">
+        select * from collectionproject where UUID=#{uuid}
+    </select>
+
+
+<select id="index" resultMap="BaseResultMap">
+
+    select * from collectionproject where pid=1 or pid=5 or pid=6
+
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    PID, PNAME, PMONEY, PDAY, PCREATETIME, PDACHENGLV, PMIAOSHU, PTOUTU, PXIANGTU, PJIESHAO,
+    PXIANGXIJIESHAO, PPHONE, PDIANHUA, PZHANGHAO, PSHENFENZHENG, PHONE1, PHONE2, PHONE3,
+    PFENLEI, UUID, PCHOU
+  </sql>
+    <select id="selectByExample" parameterType="com.qphone.pojo.CollectionBeanExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from COLLECTIONPROJECT
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from COLLECTIONPROJECT
+        where PID = #{pid,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from COLLECTIONPROJECT
+    where PID = #{pid,jdbcType=DECIMAL}
+  </delete>
+
+    <insert id="insertSelective" parameterType="com.qphone.pojo.CollectionBean">
+        insert into COLLECTIONPROJECT
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                PID,
+            </if>
+            <if test="pname != null">
+                PNAME,
+            </if>
+            <if test="pmoney != null">
+                PMONEY,
+            </if>
+            <if test="pday != null">
+                PDAY,
+            </if>
+            <if test="pcreatetime != null">
+                PCREATETIME,
+            </if>
+            <if test="pdachenglv != null">
+                PDACHENGLV,
+            </if>
+            <if test="pmiaoshu != null">
+                PMIAOSHU,
+            </if>
+            <if test="ptoutu != null">
+                PTOUTU,
+            </if>
+            <if test="pxiangtu != null">
+                PXIANGTU,
+            </if>
+            <if test="pjieshao != null">
+                PJIESHAO,
+            </if>
+            <if test="pxiangxijieshao != null">
+                PXIANGXIJIESHAO,
+            </if>
+            <if test="pphone != null">
+                PPHONE,
+            </if>
+            <if test="pdianhua != null">
+                PDIANHUA,
+            </if>
+            <if test="pzhanghao != null">
+                PZHANGHAO,
+            </if>
+            <if test="pshenfenzheng != null">
+                PSHENFENZHENG,
+            </if>
+            <if test="phone1 != null">
+                PHONE1,
+            </if>
+            <if test="phone2 != null">
+                PHONE2,
+            </if>
+            <if test="phone3 != null">
+                PHONE3,
+            </if>
+            <if test="pfenlei != null">
+                PFENLEI,
+            </if>
+            <if test="uuid != null">
+                UUID,
+            </if>
+            <if test="pchou != null">
+                PCHOU,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pid != null">
+                #{pid,jdbcType=DECIMAL},
+            </if>
+            <if test="pname != null">
+                #{pname,jdbcType=VARCHAR},
+            </if>
+            <if test="pmoney != null">
+                #{pmoney,jdbcType=DECIMAL},
+            </if>
+            <if test="pday != null">
+                #{pday,jdbcType=VARCHAR},
+            </if>
+            <if test="pcreatetime != null">
+                #{pcreatetime,jdbcType=DATE},
+            </if>
+            <if test="pdachenglv != null">
+                #{pdachenglv,jdbcType=VARCHAR},
+            </if>
+            <if test="pmiaoshu != null">
+                #{pmiaoshu,jdbcType=VARCHAR},
+            </if>
+            <if test="ptoutu != null">
+                #{ptoutu,jdbcType=VARCHAR},
+            </if>
+            <if test="pxiangtu != null">
+                #{pxiangtu,jdbcType=VARCHAR},
+            </if>
+            <if test="pjieshao != null">
+                #{pjieshao,jdbcType=VARCHAR},
+            </if>
+            <if test="pxiangxijieshao != null">
+                #{pxiangxijieshao,jdbcType=VARCHAR},
+            </if>
+            <if test="pphone != null">
+                #{pphone,jdbcType=VARCHAR},
+            </if>
+            <if test="pdianhua != null">
+                #{pdianhua,jdbcType=VARCHAR},
+            </if>
+            <if test="pzhanghao != null">
+                #{pzhanghao,jdbcType=VARCHAR},
+            </if>
+            <if test="pshenfenzheng != null">
+                #{pshenfenzheng,jdbcType=VARCHAR},
+            </if>
+            <if test="phone1 != null">
+                #{phone1,jdbcType=VARCHAR},
+            </if>
+            <if test="phone2 != null">
+                #{phone2,jdbcType=VARCHAR},
+            </if>
+            <if test="phone3 != null">
+                #{phone3,jdbcType=VARCHAR},
+            </if>
+            <if test="pfenlei != null">
+                #{pfenlei,jdbcType=VARCHAR},
+            </if>
+            <if test="uuid != null">
+                #{uuid,jdbcType=DECIMAL},
+            </if>
+            <if test="pchou != null">
+                #{pchou,jdbcType=DECIMAL},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.qphone.pojo.CollectionBeanExample" resultType="java.lang.Long">
+        select count(*) from COLLECTIONPROJECT
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update COLLECTIONPROJECT
+        <set>
+            <if test="record.pid != null">
+                PID = #{record.pid,jdbcType=DECIMAL},
+            </if>
+            <if test="record.pname != null">
+                PNAME = #{record.pname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.pmoney != null">
+                PMONEY = #{record.pmoney,jdbcType=DECIMAL},
+            </if>
+            <if test="record.pday != null">
+                PDAY = #{record.pday,jdbcType=VARCHAR},
+            </if>
+            <if test="record.pcreatetime != null">
+                PCREATETIME = #{record.pcreatetime,jdbcType=DATE},
+            </if>
+            <if test="record.pdachenglv != null">
+                PDACHENGLV = #{record.pdachenglv,jdbcType=VARCHAR},
+            </if>
+            <if test="record.pmiaoshu != null">
+                PMIAOSHU = #{record.pmiaoshu,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ptoutu != null">
+                PTOUTU = #{record.ptoutu,jdbcType=VARCHAR},
+            </if>
+            <if test="record.pxiangtu != null">
+                PXIANGTU = #{record.pxiangtu,jdbcType=VARCHAR},
+            </if>
+            <if test="record.pjieshao != null">
+                PJIESHAO = #{record.pjieshao,jdbcType=VARCHAR},
+            </if>
+            <if test="record.pxiangxijieshao != null">
+                PXIANGXIJIESHAO = #{record.pxiangxijieshao,jdbcType=VARCHAR},
+            </if>
+            <if test="record.pphone != null">
+                PPHONE = #{record.pphone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.pdianhua != null">
+                PDIANHUA = #{record.pdianhua,jdbcType=VARCHAR},
+            </if>
+            <if test="record.pzhanghao != null">
+                PZHANGHAO = #{record.pzhanghao,jdbcType=VARCHAR},
+            </if>
+            <if test="record.pshenfenzheng != null">
+                PSHENFENZHENG = #{record.pshenfenzheng,jdbcType=VARCHAR},
+            </if>
+            <if test="record.phone1 != null">
+                PHONE1 = #{record.phone1,jdbcType=VARCHAR},
+            </if>
+            <if test="record.phone2 != null">
+                PHONE2 = #{record.phone2,jdbcType=VARCHAR},
+            </if>
+            <if test="record.phone3 != null">
+                PHONE3 = #{record.phone3,jdbcType=VARCHAR},
+            </if>
+            <if test="record.pfenlei != null">
+                PFENLEI = #{record.pfenlei,jdbcType=VARCHAR},
+            </if>
+            <if test="record.uuid != null">
+                UUID = #{record.uuid,jdbcType=DECIMAL},
+            </if>
+            <if test="record.pchou != null">
+                PCHOU = #{record.pchou,jdbcType=DECIMAL},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update COLLECTIONPROJECT
+        set PID = #{record.pid,jdbcType=DECIMAL},
+        PNAME = #{record.pname,jdbcType=VARCHAR},
+        PMONEY = #{record.pmoney,jdbcType=DECIMAL},
+        PDAY = #{record.pday,jdbcType=VARCHAR},
+        PCREATETIME = #{record.pcreatetime,jdbcType=DATE},
+        PDACHENGLV = #{record.pdachenglv,jdbcType=VARCHAR},
+        PMIAOSHU = #{record.pmiaoshu,jdbcType=VARCHAR},
+        PTOUTU = #{record.ptoutu,jdbcType=VARCHAR},
+        PXIANGTU = #{record.pxiangtu,jdbcType=VARCHAR},
+        PJIESHAO = #{record.pjieshao,jdbcType=VARCHAR},
+        PXIANGXIJIESHAO = #{record.pxiangxijieshao,jdbcType=VARCHAR},
+        PPHONE = #{record.pphone,jdbcType=VARCHAR},
+        PDIANHUA = #{record.pdianhua,jdbcType=VARCHAR},
+        PZHANGHAO = #{record.pzhanghao,jdbcType=VARCHAR},
+        PSHENFENZHENG = #{record.pshenfenzheng,jdbcType=VARCHAR},
+        PHONE1 = #{record.phone1,jdbcType=VARCHAR},
+        PHONE2 = #{record.phone2,jdbcType=VARCHAR},
+        PHONE3 = #{record.phone3,jdbcType=VARCHAR},
+        PFENLEI = #{record.pfenlei,jdbcType=VARCHAR},
+        UUID = #{record.uuid,jdbcType=DECIMAL},
+        PCHOU = #{record.pchou,jdbcType=DECIMAL}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.qphone.pojo.CollectionBean">
+        update COLLECTIONPROJECT
+        <set>
+            <if test="pname != null">
+                PNAME = #{pname,jdbcType=VARCHAR},
+            </if>
+            <if test="pmoney != null">
+                PMONEY = #{pmoney,jdbcType=DECIMAL},
+            </if>
+            <if test="pday != null">
+                PDAY = #{pday,jdbcType=VARCHAR},
+            </if>
+            <if test="pcreatetime != null">
+                PCREATETIME = #{pcreatetime,jdbcType=DATE},
+            </if>
+            <if test="pdachenglv != null">
+                PDACHENGLV = #{pdachenglv,jdbcType=VARCHAR},
+            </if>
+            <if test="pmiaoshu != null">
+                PMIAOSHU = #{pmiaoshu,jdbcType=VARCHAR},
+            </if>
+            <if test="ptoutu != null">
+                PTOUTU = #{ptoutu,jdbcType=VARCHAR},
+            </if>
+            <if test="pxiangtu != null">
+                PXIANGTU = #{pxiangtu,jdbcType=VARCHAR},
+            </if>
+            <if test="pjieshao != null">
+                PJIESHAO = #{pjieshao,jdbcType=VARCHAR},
+            </if>
+            <if test="pxiangxijieshao != null">
+                PXIANGXIJIESHAO = #{pxiangxijieshao,jdbcType=VARCHAR},
+            </if>
+            <if test="pphone != null">
+                PPHONE = #{pphone,jdbcType=VARCHAR},
+            </if>
+            <if test="pdianhua != null">
+                PDIANHUA = #{pdianhua,jdbcType=VARCHAR},
+            </if>
+            <if test="pzhanghao != null">
+                PZHANGHAO = #{pzhanghao,jdbcType=VARCHAR},
+            </if>
+            <if test="pshenfenzheng != null">
+                PSHENFENZHENG = #{pshenfenzheng,jdbcType=VARCHAR},
+            </if>
+            <if test="phone1 != null">
+                PHONE1 = #{phone1,jdbcType=VARCHAR},
+            </if>
+            <if test="phone2 != null">
+                PHONE2 = #{phone2,jdbcType=VARCHAR},
+            </if>
+            <if test="phone3 != null">
+                PHONE3 = #{phone3,jdbcType=VARCHAR},
+            </if>
+            <if test="pfenlei != null">
+                PFENLEI = #{pfenlei,jdbcType=VARCHAR},
+            </if>
+            <if test="uuid != null">
+                UUID = #{uuid,jdbcType=DECIMAL},
+            </if>
+            <if test="pchou != null">
+                PCHOU = #{pchou,jdbcType=DECIMAL},
+            </if>
+        </set>
+        where PID = #{pid,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.qphone.pojo.CollectionBean">
+    update COLLECTIONPROJECT
+    set PNAME = #{pname,jdbcType=VARCHAR},
+      PMONEY = #{pmoney,jdbcType=DECIMAL},
+      PDAY = #{pday,jdbcType=VARCHAR},
+      PCREATETIME = #{pcreatetime,jdbcType=DATE},
+      PDACHENGLV = #{pdachenglv,jdbcType=VARCHAR},
+      PMIAOSHU = #{pmiaoshu,jdbcType=VARCHAR},
+      PTOUTU = #{ptoutu,jdbcType=VARCHAR},
+      PXIANGTU = #{pxiangtu,jdbcType=VARCHAR},
+      PJIESHAO = #{pjieshao,jdbcType=VARCHAR},
+      PXIANGXIJIESHAO = #{pxiangxijieshao,jdbcType=VARCHAR},
+      PPHONE = #{pphone,jdbcType=VARCHAR},
+      PDIANHUA = #{pdianhua,jdbcType=VARCHAR},
+      PZHANGHAO = #{pzhanghao,jdbcType=VARCHAR},
+      PSHENFENZHENG = #{pshenfenzheng,jdbcType=VARCHAR},
+      PHONE1 = #{phone1,jdbcType=VARCHAR},
+      PHONE2 = #{phone2,jdbcType=VARCHAR},
+      PHONE3 = #{phone3,jdbcType=VARCHAR},
+      PFENLEI = #{pfenlei,jdbcType=VARCHAR},
+      UUID = #{uuid,jdbcType=DECIMAL},
+      PCHOU = #{pchou,jdbcType=DECIMAL}
+    where PID = #{pid,jdbcType=DECIMAL}
+  </update>
+</mapper>

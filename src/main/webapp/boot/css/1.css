@@ -1,0 +1,100 @@
+@CHARSET "UTF-8";
+.row1{
+	
+background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#f6f6f8), to(#b8c4cb));
+}
+.col1{
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#f6f6f8), to(#b8c4cb));
+	
+}
+.name1{
+	color: #17cc1e;
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#f6f6f8), to(#b8c4cb));
+}
+.id{
+	height: 50px
+}
+.row2{
+	width:1170px; 
+	background-color: #6F6F6F;
+	
+}
+.row3{
+	width：1170px;
+	height: 40px;
+	background-color: #6F6F6F;
+	line-height: 40px
+}
+.row4{
+	width: 1170px;
+	height: 390px
+	}
+.class1{
+	width: 270px;
+	height: 390px;
+	border: solid #6F6F6F 1px
+	
+}
+.class2{
+	width: 450px;
+	height: 390px;
+	border: solid #6F6F6F 1px
+}
+.class3{
+	width: 270px;
+	height: 30px
+}
+.class4{
+	width: 450px;
+	height: 195px
+	
+}
+.class5{
+	border: solid #6F6F6F 5px;
+	height: 150px;
+	width: 1170px
+}
+.class6{
+	width:195px;
+	height: 40px;
+	background-color: #6F6F6F;
+	line-height: 40px
+	
+}
+.class7{
+	width: 195px;
+	height: 390px;
+	border: solid #6F6F6F 1px
+}
+.class8{
+    
+	height: 40px;
+	border: solid #6F6F6F 1px;
+	line-height: 40px
+	
+}
+.class9{
+	
+	
+	border: solid #6F6F6F 1px
+}
+.class10{
+	width: 60px;
+	height: 70px
+}
+#right{
+			width:380px ;
+			height: 425px;
+			border:solid 3px #de99d2;
+			float: right;/* 右边框div属性*/	
+		display:block;
+			position: absolute;
+			top:-206px;
+			left:226px;	
+			border-radius: 4px;
+				
+		}
+.err{
+	font-size: 12px;
+	color: red;
+}

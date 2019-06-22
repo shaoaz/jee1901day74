@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qphone.dao.AddressBeanMapper">
+  <resultMap id="BaseResultMap" type="com.qphone.pojo.AddressBean">
+    <id column="AID" jdbcType="DECIMAL" property="aid" />
+    <result column="UUID" jdbcType="DECIMAL" property="uuid" />
+    <result column="ANAME" jdbcType="VARCHAR" property="aname" />
+    <result column="APHONE" jdbcType="VARCHAR" property="aphone" />
+    <result column="AADDRESS" jdbcType="VARCHAR" property="aaddress" />
+  </resultMap>
+
+  <insert id="insertone" parameterType="com.qphone.pojo.AddressBean">
+    insert into ADDRESS ( UUID, ANAME,
+    APHONE, AADDRESS)
+    values ( #{uuid,jdbcType=DECIMAL}, #{aname,jdbcType=VARCHAR},
+    #{aphone,jdbcType=VARCHAR}, #{aaddress,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="selectbyuser" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select * from address where uuid=#{id,jdbcType=DECIMAL}
+  </select>
+
+
+</mapper>
